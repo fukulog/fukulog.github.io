@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>FUKULOG開発者ブログ</title>
+  <meta name="author" content="FUKULOG">
+  
+  <meta name="description" content="FUKULOGの新人エンジニアがサイトの開発や運営について書いています。">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="format-detection" content="telephone=no" />
+
+  <meta property="og:title" content="FUKULOG開発者ブログ">
+  <meta property="og:description" content="FUKULOGの新人エンジニアがサイトの開発や運営について書いています。">
+  <meta property="og:image" content="http://fukulog.github.io/images/sitelogo_square_180_180.png">
+  <meta property="og:url" content="http://fukulog.github.io/blog/page/2/index.html">
+
+  
+  <link rel="apple-touch-icon-precomposed" href="/images/webicon.png">
+  <link rel="canonical" href="http://fukulog.github.io/blog/page/2/">
+  <link href="/stylesheets/screen.css" rel="stylesheet">
+  <link href="/atom.xml" rel="alternate" title="FUKULOG開発者ブログ" type="application/atom+xml">
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-10893350-8']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+<body>
+  
+
+  <div class="wrapper">
+    <header>
+      <a href="/"><img src="/images/fukulog_logo_s.gif" alt="FUKULOG"></a>
+      <h1><a href="/">FUKULOG開発者ブログ</a></h1>
+      <p>FUKULOGの新人エンジニアがサイトの開発や運営について書いています。</p>
+      <ul>
+        <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+        <li><a href="/blog/archives">アーカイブ</a></li>
+      </ul>
+<!--
+      <form action="http://google.com/search" method="get">
+        <input type="hidden" name="q" value="site:fukulog.github.io" />
+        <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+      </form>
+-->
+    </header>
+
+    <section>
+      
+
+<article>
+  <div class="article-header clear">
+    <h1><a href="/blog/2012/06/06/fukulog-environment/">FUKULOGのシステム構成・国内IT系各社の開発言語</a></h1>
+    <a data-pocket-label="pocket" data-save-url="http://fukulog.github.io/blog/2012/06/06/fukulog-environment/" data-pocket-count="vertical" class="pocket-btn" data-lang="en"></a><script type="text/javascript">!function(d,i){if(!d.getElementById(i)){var j=d.createElement("script");j.id=i;j.src="https://widgets.getpocket.com/v1/j/btn.js?v=1";var w=d.getElementById(i);d.body.appendChild(j);}}(document,"pocket-btn-js");</script>
+    <p>
+
+
+
+
+
+
+
+
+  
+
+
+
+<time datetime="2012-06-06T10:49:00+09:00" pubdate data-updated="true">Jun 6<span>th</span>, 2012</time> 
+  
+
+Posted by <a href="https://twitter.com/FUKULOG" target="_blank">@FUKULOG</a>
+</p>
+  </div>
+  
+  <p>こんにちは、FUKULOGのnagasawaです。
+ここで軽くFUKULOGのシステム構成について書いてみたいと思います。</p>
+
+<h2>OS</h2>
+
+<p>CentOS（Amazon EC2）を使用しています。</p>
+
+<h2>Webサーバ</h2>
+
+<p>Apache2.2です。EC2の<a href="http://aws.amazon.com/jp/elasticloadbalancing/" title="Elastic Load Balancing">Elastic Load Balancing</a>を利用してロードバランシングをしています。</p>
+
+<h2>アプリケーション</h2>
+
+<p>フレームワークなどは特に使用せず、PHPで独自に実装しています。テンプレートエンジンにSmartyを使用しているぐらいです。</p>
+
+<h2>DB</h2>
+
+<p>MySQL 5.0 で、全文検索Sennaが組み込まれた<a href="http://qwik.jp/tritonn/" title="Tritonn">Tritonn</a>を使用して、コーディネート/アイテムなどに付随する情報の全文検索を行っています。</p>
+
+<p>また一部では、全文検索エンジンライブラリLuceneがベースになっている<a href="http://lucene.apache.org/solr/" title="Solr">Solr</a>を使った全文検索も行なっています。
+Tritonn使ってるのになんで？という感じですが、Tritonnだけでは思うようなパフォーマンスが出なかった、という経緯があります。
+ただし最近になって、Tritonn本体とは別の原因がありそう&#8230;という話も出ていて一度ちゃんと調査してみる予定です。</p>
+
+<h2>開発言語</h2>
+
+<p>PHPです。
+ちなみにFUKULOGではブログパーツの提供もしているのですが、こちらはJava（Google App Engine）で実装されていたりします。</p>
+
+<p>と大まかに書いてみましたが、せっかくなので以下に主に国内IT系各社の主要開発言語を調べて（採用情報や開発者ブログ等から）列挙してみました。</p>
+
+<p>※会社単位で一概に開発言語&#8221;これ&#8221;とも言えないと思うので参考程度に</p>
+
+<hr />
+
+<h3>Ruby</h3>
+
+<ul>
+<li>Cookpad</li>
+<li>Increments（Qiita）</li>
+<li>VASILY（iQON）</li>
+<li>Twitter（Scala、Javaへ移行？）</li>
+</ul>
+
+
+<h3>PHP</h3>
+
+<ul>
+<li>Yahoo! Japan（米Yahoo!も？）</li>
+<li>楽天</li>
+<li>GREE</li>
+<li>KLab</li>
+<li>ドワンゴ</li>
+<li>pixiv</li>
+<li>nanapi</li>
+<li>Facebook</li>
+</ul>
+
+
+<h3>Perl</h3>
+
+<ul>
+<li>はてな</li>
+<li>NHN（旧ライブドア）</li>
+<li>mixi</li>
+<li>DeNA</li>
+<li>KAYAC</li>
+<li>FreakOut</li>
+</ul>
+
+
+<hr />
+
+<p>思いつくまま挙げてみたんですけど、意外にPerl率高めというところでしょうか。
+最近のスタートアップに限定してみると、また違う結果になりそうです。</p>
+
+<p>世界的にみると、Pythonが食い込んできたり、Rubyがもう少し多かったりしそうですね。
+上場で話題のFacebookでは既存のPHPを独自に高速化（C++に変換）して使ってる、という話も聞いたことがあります。</p>
+
+<p>開発言語は、普通作る&#8221;もの&#8221;によって最初に決めると思いますが、これから新たに作り始めるとしたら、Ruby on Railsの登場で開発コストが下がったという面で、Rubyが選ばれることが多いんでしょうか。</p>
+
+<p>この際FUKULOGもRubyで&#8230;！？（笑）。</p>
+
+
+  <ul class="sharing clear">
+  <li><a href="http://twitter.com/share" class="twitter-share-button" data-url="http://fukulog.github.io/blog/2012/06/06/fukulog-environment/" data-text="FUKULOGのシステム構成・国内IT系各社の開発言語 - FUKULOG開発者ブログ" data-count="horizontal" data-lang="en">Tweet</a><script type="text/javascript" src="http://platform.twitter.com/widgets.js"></script></li>
+  <li><iframe src="//www.facebook.com/plugins/like.php?href=http://fukulog.github.io/blog/2012/06/06/fukulog-environment/&amp;send=false&amp;layout=button_count&amp;width=100&amp;show_faces=false&amp;font&amp;colorscheme=light&amp;action=like&amp;height=21" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:100px; height:21px;" allowTransparency="true"></iframe></li>
+  <li><a href="http://b.hatena.ne.jp/entry/http://fukulog.github.io/blog/2012/06/06/fukulog-environment/" class="hatena-bookmark-button" data-hatena-bookmark-title="FUKULOGのシステム構成・国内IT系各社の開発言語 - FUKULOG開発者ブログ" data-hatena-bookmark-layout="standard-balloon" title="このエントリーをはてなブックマークに追加"><img src="http://b.st-hatena.com/images/entry-button/button-only.gif" alt="このエントリーをはてなブックマークに追加" width="20" height="20" style="border: none;" /></a><script type="text/javascript" src="http://b.st-hatena.com/js/bookmark_button.js" charset="utf-8" async="async"></script><li>
+</ul>
+
+</article>
+
+
+<article>
+  <div class="article-header clear">
+    <h1><a href="/blog/2012/05/18/initial-post/">エンジニアブログはじめました</a></h1>
+    <a data-pocket-label="pocket" data-save-url="http://fukulog.github.io/blog/2012/05/18/initial-post/" data-pocket-count="vertical" class="pocket-btn" data-lang="en"></a><script type="text/javascript">!function(d,i){if(!d.getElementById(i)){var j=d.createElement("script");j.id=i;j.src="https://widgets.getpocket.com/v1/j/btn.js?v=1";var w=d.getElementById(i);d.body.appendChild(j);}}(document,"pocket-btn-js");</script>
+    <p>
+
+
+
+
+
+
+
+
+  
+
+
+
+<time datetime="2012-05-18T11:00:00+09:00" pubdate data-updated="true">May 18<span>th</span>, 2012</time> 
+  
+
+Posted by <a href="https://twitter.com/FUKULOG" target="_blank">@FUKULOG</a>
+</p>
+  </div>
+  
+  <p>こんにちは、はじめまして。FUKULOGエンジニアのnagasawaです。
+FUKULOGでも開発者ブログを始めることになり、先月入社したばかりのド新人ですが、私が担当することになりました。よろしくお願いします。</p>
+
+<p>初めての記事なので、少し自己紹介を。</p>
+
+<p>最初に触った言語はperlで、今も趣味で何か作ろうとするときにはperlをよく使っています。
+FUKULOGの開発言語であるphpの経験は極めて浅く、現在日々勉強中です。。。
+業務では主にフロントエンドを担当、既にいくつかの機能の実装をやらせてもらっています。
+今後ともよろしくお願いします！</p>
+
+<p>というわけで、開発者ブログを始めるにあたり、FUKULOGの<a href="https://github.com/fukulog">githubアカウント</a>を作るとともに、個人的にも気になっていた<a href="http://octopress.org/docs/">Octopress</a>でのブログ運用を導入してみました。
+Octopressの特徴として以下のような点が。</p>
+
+<ul>
+<li>MIT License</li>
+<li>ruby製</li>
+<li>コマンドラインベースでの運用</li>
+<li>自由度が高いカスタムが可能</li>
+<li>Markdown記法で記事を書く</li>
+<li>静的にHTMLが作られる（MTに似てる）</li>
+<li>コードの表示が綺麗（→A blogging framework for hackers.）</li>
+<li>githubとの親和性が高い（gistの埋め込みも容易）</li>
+</ul>
+
+
+<figure class='code'><figcaption><span>rvmのセットアップ、ruby-1.9.2のインストール、rubygemsの更新</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>bash &lt; &lt;<span class="o">(</span>curl -s https://raw.github.com/wayneeseguin/rvm/master/binscripts/rvm-installer<span class="o">)</span>
+</span><span class='line'><span class="nb">echo</span> <span class="s1">&#39;[[ -s &quot;$HOME/.rvm/scripts/rvm&quot; ]] &amp;&amp; . &quot;$HOME/.rvm/scripts/rvm&quot; # Load RVM function&#39;</span> &gt;&gt; ~/.bash_profile
+</span><span class='line'><span class="nb">source</span> .bash_profile
+</span><span class='line'>rvm install 1.9.2
+</span><span class='line'>rvm use 1.9.2
+</span><span class='line'>rvm rubygems latest
+</span></code></pre></td></tr></table></div></figure>
+
+
+
+
+<figure class='code'><figcaption><span>Octopressのインストール</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nb">cd </span>dev
+</span><span class='line'>git clone git://github.com/imathis/octopress.git dev-blog
+</span><span class='line'><span class="nb">cd </span>dev-blog
+</span><span class='line'>gem install bundler
+</span><span class='line'>bundle install
+</span><span class='line'>bundle update rake
+</span><span class='line'>rake install
+</span></code></pre></td></tr></table></div></figure>
+
+
+
+
+<figure class='code'><figcaption><span>ブログのプレビュー</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>rake generate
+</span><span class='line'>rake preview
+</span></code></pre></td></tr></table></div></figure>
+
+
+
+
+<figure class='code'><figcaption><span>ブログのデプロイ</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>rake setup_github_pages
+</span><span class='line'><span class="c"># Github PagesのリポジトリURLを入力</span>
+</span><span class='line'><span class="c"># git@github.com:fukulog/fukulog.github.com.git</span>
+</span><span class='line'>rake gen_deploy
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Octopressでは、WEBrickというrubyのみで書かれたWebサーバー用フレームワークが使われていて、<code>rake preview</code>するとWEBrick::HTTPServerが4000番ポートで起動します。
+Apacheなどの設定をしなくても手元ですぐにプレビュー出来るのはお手軽で良い感じです。デプロイ時に<code>rake generate</code>で自動生成された静的ファイルがgithubにpushされて公開となります。</p>
+
+<p>毎回コマンドラインからプレビューしなくても、
+日常、下書きを書きためたり、Markdownをプレビューするときには、<a href="http://kobitoapp.com/">Kobito.app</a>というMarkdown記法をリアルタイムプレビュー出来るアプリ等を使うのも良さそうかなと思っています。
+（※KobitoはMarkdown記法のルールが若干異なるので注意が必要）</p>
+
+<p>まだ手探り状態ですが、しばらくはこれで運用してみたいと思います。</p>
+
+<p>今後もFUKULOGの開発のなかで得た情報を共有・発信していきたいと思うので、よろしくお願いします！</p>
+
+
+  <ul class="sharing clear">
+  <li><a href="http://twitter.com/share" class="twitter-share-button" data-url="http://fukulog.github.io/blog/2012/05/18/initial-post/" data-text="エンジニアブログはじめました - FUKULOG開発者ブログ" data-count="horizontal" data-lang="en">Tweet</a><script type="text/javascript" src="http://platform.twitter.com/widgets.js"></script></li>
+  <li><iframe src="//www.facebook.com/plugins/like.php?href=http://fukulog.github.io/blog/2012/05/18/initial-post/&amp;send=false&amp;layout=button_count&amp;width=100&amp;show_faces=false&amp;font&amp;colorscheme=light&amp;action=like&amp;height=21" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:100px; height:21px;" allowTransparency="true"></iframe></li>
+  <li><a href="http://b.hatena.ne.jp/entry/http://fukulog.github.io/blog/2012/05/18/initial-post/" class="hatena-bookmark-button" data-hatena-bookmark-title="エンジニアブログはじめました - FUKULOG開発者ブログ" data-hatena-bookmark-layout="standard-balloon" title="このエントリーをはてなブックマークに追加"><img src="http://b.st-hatena.com/images/entry-button/button-only.gif" alt="このエントリーをはてなブックマークに追加" width="20" height="20" style="border: none;" /></a><script type="text/javascript" src="http://b.st-hatena.com/js/bookmark_button.js" charset="utf-8" async="async"></script><li>
+</ul>
+
+</article>
+
+
+
+<nav class="pager">
+  
+  <a class="prev" href="/">&larr; Older</a>
+  
+  
+</nav>
+
+
+    </section>
+
+    <footer>
+      <dl>
+        <dt>最近の投稿</dt>
+        
+        <dd><a href="/blog/2013/08/20/gas-sendmail/">Google Apps Script を使って各種有効期限を管理＆メールでお知らせするようにすると便利</a></dd>
+        
+        <dd><a href="/blog/2013/05/22/using-uncrustify-in-xcode/">Xcode で コードフォーマッター Uncrustify を使う</a></dd>
+        
+        <dd><a href="/blog/2013/05/16/git-hook-deploy/">git hooks を利用したデプロイを導入しました</a></dd>
+        
+      </dl>
+      <dl>
+        <dt>リンク</dt>
+        <dd><a href="http://fukulog.jp/recruit#r_engineer"><img src="/images/recruit.jpg" alt="【求人】FUKULOGを一緒に作るシステムエンジニアを募集中" title="【求人】FUKULOGを一緒に作るシステムエンジニアを募集中"></a></dd>
+        <dd><a href="http://fukulog.jp">&raquo; FUKULOG</a></dd>
+      </dl>
+    </footer>
+  </div>
+</body>
+</html>

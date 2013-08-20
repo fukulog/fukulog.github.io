@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Xcode で コードフォーマッター Uncrustify を使う - FUKULOG開発者ブログ</title>
+  <meta name="author" content="FUKULOG">
+  
+  <meta name="description" content="Xcode で コードフォーマッター Uncrustify を使う May 22nd, 2013 Posted by @wata_n Source Code Beautifier for C, C++, C#, ObjectiveC, D, Java, Pawn and &hellip;">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="format-detection" content="telephone=no" />
+
+  <meta property="og:title" content="Xcode で コードフォーマッター Uncrustify を使う - FUKULOG開発者ブログ">
+  <meta property="og:description" content="Xcode で コードフォーマッター Uncrustify を使う May 22nd, 2013 Posted by @wata_n Source Code Beautifier for C, C++, C#, ObjectiveC, D, Java, Pawn and &hellip;">
+  <meta property="og:image" content="http://fukulog.github.io/images/sitelogo_square_180_180.png">
+  <meta property="og:url" content="http://fukulog.github.io/blog/2013/05/22/using-uncrustify-in-xcode/">
+
+  
+  <link rel="apple-touch-icon-precomposed" href="/images/webicon.png">
+  <link rel="canonical" href="http://fukulog.github.io/blog/2013/05/22/using-uncrustify-in-xcode/">
+  <link href="/stylesheets/screen.css" rel="stylesheet">
+  <link href="/atom.xml" rel="alternate" title="FUKULOG開発者ブログ" type="application/atom+xml">
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-10893350-8']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+<body>
+  
+
+  <div class="wrapper">
+    <header>
+      <a href="/"><img src="/images/fukulog_logo_s.gif" alt="FUKULOG"></a>
+      <h1><a href="/">FUKULOG開発者ブログ</a></h1>
+      <p>FUKULOGの新人エンジニアがサイトの開発や運営について書いています。</p>
+      <ul>
+        <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+        <li><a href="/blog/archives">アーカイブ</a></li>
+      </ul>
+<!--
+      <form action="http://google.com/search" method="get">
+        <input type="hidden" name="q" value="site:fukulog.github.io" />
+        <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+      </form>
+-->
+    </header>
+
+    <section>
+      <article>
+  <div class="article-header clear">
+    <h1>Xcode で コードフォーマッター Uncrustify を使う</h1>
+    <a data-pocket-label="pocket" data-save-url="http://fukulog.github.io/blog/2013/05/22/using-uncrustify-in-xcode/" data-pocket-count="vertical" class="pocket-btn" data-lang="en"></a><script type="text/javascript">!function(d,i){if(!d.getElementById(i)){var j=d.createElement("script");j.id=i;j.src="https://widgets.getpocket.com/v1/j/btn.js?v=1";var w=d.getElementById(i);d.body.appendChild(j);}}(document,"pocket-btn-js");</script>
+    <p>
+
+
+
+
+
+
+
+
+  
+
+
+
+<time datetime="2013-05-22T15:01:00+09:00" pubdate data-updated="true">May 22<span>nd</span>, 2013</time> 
+  
+
+Posted by <a href="https://twitter.com/wata_n" target="_blank">@wata_n</a>
+</p>
+  </div>
+
+  <blockquote><p>Source Code Beautifier for C, C++, C#, ObjectiveC, D, Java, Pawn and VALA</p><footer><strong>Uncrustify</strong> <cite><a href='http://uncrustify.sourceforge.net/'>uncrustify.sourceforge.net/&hellip;</a></cite></footer></blockquote>
+
+
+<p>最近iOS開発で使い始めて、良い感じな Uncrustify 。
+設定に従って、インデントの数やスペースの取り方など、自動でコードを綺麗に整形してくれます。
+似たもので、 perl 版で同じようなことをしてくれるツール <a href="https://metacpan.org/module/SHANCOCK/Perl-Tidy-20121207/bin/perltidy">perltidy</a> とかがあります。</p>
+
+<p>新しいソフトウェアとかでは全然無いんですが、Xcode にスクリプトを設定して任意のタイミングで uncrustify を走らす、
+というのが便利だった＆インストール〜Xcodeに設定までが一気通貫でまとまった記事があまり無さそうだったので書いてみます。</p>
+
+<h2>インストール</h2>
+
+<p>homebrew を使っているならこれだけで入ります。
+（ちなみに <a href="https://github.com/benoitsan/BBUncrustifyPlugin-Xcode">Xcode プラグイン版</a>もありますが、今回は使いません）</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>brew install uncrustify
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>Xcode から実行するスクリプト</h2>
+
+<p>スクリプトはホームディレクトリの<code>~/bin/uncrustify</code>に、設定ファイルは<code>~/.uncrustifyconfig</code>に置いてます。</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>vi ~/bin/uncrustify <span class="c"># スクリプト</span>
+</span><span class='line'><span class="nv">$ </span>chmod +x ~/bin/uncrustify
+</span><span class='line'><span class="nv">$ </span>vi ~/.uncrustifyconfig <span class="c"># 設定ファイル</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>スクリプトは、<a href="http://robertjpayne.tumblr.com/post/9092159751/using-uncrustify-directly-in-xcode-4">Using Uncrustify directly in Xcode 4!</a> を参考にパスなどを変えてます。</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="c1">#!/usr/bin/ruby</span>
+</span><span class='line'><span class="n">base_path</span> <span class="o">=</span> <span class="no">ENV</span><span class="o">[</span><span class="s1">&#39;XcodeProjectPath&#39;</span><span class="o">]</span> <span class="o">+</span> <span class="s2">&quot;/..&quot;</span>
+</span><span class='line'>
+</span><span class='line'><span class="nb">puts</span> <span class="s2">&quot;running uncrustify for xcode project path: </span><span class="si">#{</span><span class="n">base_path</span><span class="si">}</span><span class="s2">&quot;</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">if</span> <span class="n">base_path</span> <span class="o">!=</span> <span class="kp">nil</span>
+</span><span class='line'>  <span class="n">paths</span> <span class="o">=</span> <span class="sb">`find &quot;</span><span class="si">#{</span><span class="n">base_path</span><span class="si">}</span><span class="sb">&quot; -name &quot;*.m&quot; -o -name &quot;*.h&quot; -o -name &quot;*.mm&quot; -o -name &quot;*.c&quot;`</span>
+</span><span class='line'>  <span class="n">paths</span> <span class="o">=</span> <span class="n">paths</span><span class="o">.</span><span class="n">collect</span> <span class="k">do</span> <span class="o">|</span><span class="n">path</span><span class="o">|</span>
+</span><span class='line'>    <span class="n">path</span><span class="o">.</span><span class="n">gsub</span><span class="p">(</span><span class="sr">/(^[^\n]+?)(\n)/</span><span class="p">,</span> <span class="s1">&#39;&quot;\\1&quot;&#39;</span><span class="p">)</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'>  <span class="n">paths</span> <span class="o">=</span> <span class="n">paths</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="s2">&quot; &quot;</span><span class="p">)</span>
+</span><span class='line'>  <span class="n">result</span> <span class="o">=</span> <span class="sb">`/usr/local/bin/uncrustify -c ~/.uncrustifyconfig --no-backup </span><span class="si">#{</span><span class="n">paths</span><span class="si">}</span><span class="sb">`</span><span class="p">;</span>
+</span><span class='line'>  <span class="nb">puts</span> <span class="n">result</span>
+</span><span class='line'><span class="k">else</span>
+</span><span class='line'>  <span class="nb">puts</span> <span class="s2">&quot;Invalid base path...&quot;</span>
+</span><span class='line'><span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>設定ファイルは <a href="http://qiita.com/items/dd7c5ffdff27451dae16">Uncrustifyのセッティング (1) プリプロセッサ編 #uncrustify - Qiita [キータ]</a> が詳しかったので、
+使える設定、その説明を見ながら書きます。</p>
+
+<h2>Xcode の設定</h2>
+
+<p>Xcode で<code>Build</code>に成功したタイミングで uncrustify を実行する場合です。
+[Preferences…] -> [Behaviors] と進んで、Build の Succeeds を選択し、Run の項目に上で作ったスクリプトを指定します。</p>
+
+<p><img src="/images/xcode_behaviors.png" title="Xcodeの設定" ></p>
+
+<p>あとは [Product] -> [Build] すると大量に差分が出ます。 差分を見ながら<code>.uncrustifyconfig</code>に指定した設定に従って整形されているのが確認出来ると思います。</p>
+
+<p>それぞれコーディング中は好きな作法で書いても、設定ファイルさえチームで共有しとけば、第三者が見て綺麗なソースが常に保てて便利ですね。</p>
+
+
+  <ul class="sharing clear">
+  <li><a href="http://twitter.com/share" class="twitter-share-button" data-url="http://fukulog.github.io/blog/2013/05/22/using-uncrustify-in-xcode/" data-text="Xcode で コードフォーマッター Uncrustify を使う - FUKULOG開発者ブログ" data-count="horizontal" data-lang="en">Tweet</a><script type="text/javascript" src="http://platform.twitter.com/widgets.js"></script></li>
+  <li><iframe src="//www.facebook.com/plugins/like.php?href=http://fukulog.github.io/blog/2013/05/22/using-uncrustify-in-xcode/&amp;send=false&amp;layout=button_count&amp;width=100&amp;show_faces=false&amp;font&amp;colorscheme=light&amp;action=like&amp;height=21" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:100px; height:21px;" allowTransparency="true"></iframe></li>
+  <li><a href="http://b.hatena.ne.jp/entry/http://fukulog.github.io/blog/2013/05/22/using-uncrustify-in-xcode/" class="hatena-bookmark-button" data-hatena-bookmark-title="Xcode で コードフォーマッター Uncrustify を使う - FUKULOG開発者ブログ" data-hatena-bookmark-layout="standard-balloon" title="このエントリーをはてなブックマークに追加"><img src="http://b.st-hatena.com/images/entry-button/button-only.gif" alt="このエントリーをはてなブックマークに追加" width="20" height="20" style="border: none;" /></a><script type="text/javascript" src="http://b.st-hatena.com/js/bookmark_button.js" charset="utf-8" async="async"></script><li>
+</ul>
+
+</article>
+
+
+<nav class="pager">
+  
+  <a class="prev" href="/blog/2013/05/16/git-hook-deploy/" title="Previous Post: git hooks を利用したデプロイを導入しました">&laquo; git hooks を利用したデプロイを導入しました</a>
+  
+  
+  <a class="next" href="/blog/2013/08/20/gas-sendmail/" title="Next Post: Google Apps Script を使って各種有効期限を管理＆メールでお知らせするようにすると便利">Google Apps Script を使って各種有効期限を管理＆メールでお知らせするようにすると便利 &raquo;</a>
+  
+</nav>
+
+
+    </section>
+
+    <footer>
+      <dl>
+        <dt>最近の投稿</dt>
+        
+        <dd><a href="/blog/2013/08/20/gas-sendmail/">Google Apps Script を使って各種有効期限を管理＆メールでお知らせするようにすると便利</a></dd>
+        
+        <dd><a href="/blog/2013/05/22/using-uncrustify-in-xcode/">Xcode で コードフォーマッター Uncrustify を使う</a></dd>
+        
+        <dd><a href="/blog/2013/05/16/git-hook-deploy/">git hooks を利用したデプロイを導入しました</a></dd>
+        
+      </dl>
+      <dl>
+        <dt>リンク</dt>
+        <dd><a href="http://fukulog.jp/recruit#r_engineer"><img src="/images/recruit.jpg" alt="【求人】FUKULOGを一緒に作るシステムエンジニアを募集中" title="【求人】FUKULOGを一緒に作るシステムエンジニアを募集中"></a></dd>
+        <dd><a href="http://fukulog.jp">&raquo; FUKULOG</a></dd>
+      </dl>
+    </footer>
+  </div>
+</body>
+</html>
